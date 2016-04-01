@@ -15,9 +15,11 @@
 #include <pthread.h>
 #include <string>
 #include <vector>
+#include <sstream>
 #include <gst/gst.h>
 #include "producer-callback.hpp"
 #include <Consumer-Producer-API/producer-context.hpp>
+#include <boost/algorithm/string.hpp>
 
 
 namespace ndn {

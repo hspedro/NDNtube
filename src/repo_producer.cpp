@@ -10,6 +10,7 @@
 #include <streambuf>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
+
 //#include <iostream>
 // Enclosing code in ndn simplifies coding (can also use `using namespace ndn`)
 namespace ndn {
@@ -41,6 +42,7 @@ namespace ndn {
         {
           filediff.push_back(filename);
           std::cout << "Add New File: "<<  filename << std::endl;
+	  std::cout << "Reading playlist:" << std::endl;
         }
       }
       closedir (dir);
@@ -72,6 +74,7 @@ namespace ndn {
       std::string videoFilename;
       std::string filelist;
       std::vector<std::string> filediff;
+      std::vector<std::string> videoFiles; 
       
       if (argc > 1)
       {
@@ -87,7 +90,10 @@ namespace ndn {
       while(1)
       {
         filediff = getFilenameVec(filepath, filelist); 
-        std::cout << "file list before:\n" << filelist << std::endl;
+	boost::split(videoFiles, filelist, boost::is_any_of(" "));
+	for(int i=0; i<int(videoFiles.size()); i++){
+	  std::cout << "file list before:\n" << videoFiles[i] << std::endl;
+	}
         for(int i=0; i<filediff.size(); i++)
         {
           videoFilename = filediff[i];
@@ -99,9 +105,11 @@ namespace ndn {
           myfile.close();
 
           filelist += videoFilename + "\n" ;
+	  videoFiles.push_back(videoFilename);
         }
-        std::cout << "\nfile list after:\n " << filelist << std::endl;
-
+	for(int i=0; i<int(videoFiles.size()); i++){
+	  std::cout << "\nfile list after:\n" << videoFiles[i] << std::endl;
+	}
 //        filelist_new = filelist_old;
         sleep(60);
       }
